@@ -829,19 +829,15 @@
       '</div>' +
 
       '<div class="os-section-title">Dados do Chamado</div>' +
-      '<div class="os-grid">' +
-        osItem('Localização', c.localizacao) +
-
-'<div class="os-section-title">Dados do Chamado</div>' +
 '<div class="os-grid">' +
-osItem('Localização', c.localizacao) +
-(
-    norm(c.localizacao) === 'gabinete'
-        ? osItem('Nº do Gabinete', c.numGabinete) +
-          osItem('Sala', c.sala)
-        : osItem('Nome do Setor', c.nomeSetor) +
-          osItem('Sala do Setor', c.salaSetor)
-) +
+    osItem('Localização', c.localizacao) +
+    (
+        norm(c.localizacao) === 'gabinete'
+            ? osItem('Nº do Gabinete', c.numGabinete) +
+              osItem('Sala', c.sala)
+            : osItem('Nome do Setor', c.nomeSetor) +
+              osItem('Sala do Setor', c.salaSetor)
+    ) +
 '</div>' +
 
       '<div class="os-section-title">Dados do Equipamento</div>' +
