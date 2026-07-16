@@ -297,7 +297,7 @@
     width:100%;
     max-width:none;
 
-    padding:12mm 14mm;
+    padding:20mm 22mm;
 
     page-break-after:always;
     break-inside:avoid;
@@ -446,7 +446,7 @@
     width:100%;
     max-width:none;
 
-    padding:10mm 12mm;
+    padding:18mm 20mm;
 
     page-break-after:always;
     break-inside:avoid;
@@ -660,6 +660,7 @@
     { key:'nomeSetor',      headers:['nome do setor:','nome do setor'] },
     { key:'salaSetor',      headers:['sala do setor:','sala do setor'] },
     { key:'marcaEvap',      headers:['marca da evaporadora:','marca da evaporadora'] },
+    { key:'capacidade',     headers:['capacidade:','capacidade do equipamento:', 'Capacidade da Máquina Evaporadora'] },
     { key:'tombo',          headers:['tombo: (placa alumínio/adesivo verde)','tombo (placa alumínio/adesivo verde)','tombo:'] },
     { key:'tag',            headers:['tag:  (adesivo branco com qr code)','tag: (adesivo branco com qr code)','tag:'] },
     { key:'solucionado',    headers:['problema solucionado?','problema solucionado'] },
@@ -1020,6 +1021,8 @@
 
   <div class="os-grid">
 
+    ${osItem('Anexo', c.anexo)}
+
     ${osItem('Localização', c.localizacao)}
 
     ${dadosLocalizacao}
@@ -1037,6 +1040,8 @@
   <div class="os-grid">
 
     ${osItem('Marca da Evaporadora', c.marcaEvap)}
+
+    ${osItem('Capacidade', c.capacidade)}
 
     ${osItem(
       'Tombo (placa alumínio / adesivo verde)',
