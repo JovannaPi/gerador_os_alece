@@ -842,8 +842,8 @@
       osItem('Nome do Setor', c.nomeSetor) +
       osItem('Sala do Setor', c.salaSetor)
     )
-)
-      '</div>' +
+) +
+'</div>' +
 
       '<div class="os-section-title">Dados do Equipamento</div>' +
       '<div class="os-grid">' +
@@ -862,14 +862,15 @@
       '</div>' +
 
       '<div class="os-footer">' +
-        '<div class="os-footer-row">' +
-          '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
-          '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || '__:__')+'</b></span>' +
-          '<span>Funcionário: <b>'+escapeHtml(val(c.equipe))+'</b></span>' +
-      '</div>' +
+  '<div class="os-footer-row">' +
+    '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
+    '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || "__:__")+'</b></span>' +
+    '<span>Funcionário: <b>'+escapeHtml(val(c.equipe))+'</b></span>' +
+  '</div>' +
+'</div>' +
 
-      '<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
-    '</div>');
+'<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
+'</div>';
   }
 
   function osItem(label, value){
