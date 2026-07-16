@@ -292,14 +292,16 @@
   .os-nav a:hover{ border-color:var(--ink); color:var(--ink); }
 
   .os-page{
-    background:var(--sheet);
-    border:1px solid var(--line-soft);
-    padding:44px 48px 40px;
-    margin-bottom:36px;
-    max-width:820px;
-    margin-left:auto;
-    margin-right:auto;
-  }
+    border:none;
+    margin:0;
+    width:100%;
+    max-width:none;
+
+    padding:18mm 18mm;
+
+    page-break-after:always;
+    break-inside:avoid;
+}
   .os-topline{
     display:flex;
     justify-content:space-between;
@@ -359,7 +361,7 @@
   }
   .os-item{
     font-size:13px;
-    padding:6px 0;
+    padding:7px 0;
     border-bottom:1px dotted var(--line-soft);
   }
   .os-item .lbl{
@@ -535,9 +537,9 @@
 
   /* Descrição do problema */
   .os-desc-block{
-    font-size:11px;
-    line-height:1.35;
-    padding:8px 10px;
+    font-size:13px;
+    line-height:1.5;
+    padding:12px 14px;
   }
 
 
@@ -961,7 +963,7 @@
   <div class="os-topline">
 
     <div class="os-brand">
-      <img class="os-mark" src="'${LOGO_SRC}'" alt="ALECE">
+      <img class="os-mark" src="${LOGO_SRC}" alt="ALECE">
 
       <div class="os-brand-text">
         <div class="org">ALECE — Núcleo de Manutenção Predial</div>
