@@ -292,16 +292,16 @@
   .os-nav a:hover{ border-color:var(--ink); color:var(--ink); }
 
   .os-page{
-    border:none;
-    margin:0;
-    width:100%;
-    max-width:none;
-
-    padding:20mm 22mm;
-
+    background:var(--sheet);
+    border:1px solid var(--line-soft);
+    box-shadow:0 1px 3px rgba(30,42,56,0.08), 0 6px 18px rgba(30,42,56,0.06);
+    border-radius:2px;
+    padding:44px 48px 40px;
+    margin:0 auto 40px;
+    max-width:820px;
     page-break-after:always;
     break-inside:avoid;
-}
+  }
   .os-topline{
     display:flex;
     justify-content:space-between;
@@ -402,8 +402,6 @@
   .os-footer-row span{ color:var(--ink-soft); }
   .os-footer-row b{ font-weight:600; }
 
-  
-
   .os-page-number{
     text-align:right;
     font-size:10.5px;
@@ -420,7 +418,6 @@
     color:#000;
   }
 
-  /* Remove elementos do sistema */
   .app-header,
   .toolbar,
   .os-nav,
@@ -430,7 +427,6 @@
     display:none !important;
   }
 
-
   .app{
     max-width:none;
     width:100%;
@@ -438,73 +434,58 @@
     margin:0;
   }
 
-
-  /* Página da Ordem de Serviço */
   .os-page{
     border:none;
     margin:0;
     width:100%;
     max-width:none;
-
+    box-shadow:none;
+    border-radius:0;
     padding:18mm 20mm;
-
     page-break-after:always;
     break-inside:avoid;
   }
-
 
   .os-page:last-child{
     page-break-after:auto;
   }
 
-
-  /* Cabeçalho da OS */
   .os-topline{
     margin-bottom:10px;
-    padding-bottom:10x;
+    padding-bottom:10px;
   }
-
 
   .os-brand img.os-mark{
     height:45px;
   }
 
-
   .os-brand-text .org{
     font-size:15px;
   }
-
 
   .os-brand-text .dept{
     font-size:12px;
   }
 
-
   .os-title-block .doc-type{
     font-size:14px;
   }
-
 
   .os-title-block .chamado-id{
     font-size:16px;
   }
 
-
-  /* Faixa principal */
   .os-band{
     margin:12px 0 14px;
     padding:9px 12px;
     font-size:15px;
   }
 
-
-  /* Informações menores */
   .os-meta{
     font-size:14px;
     margin-bottom:18px;
     gap:23px;
   }
-
 
   .os-section-title{
     font-size:15px;
@@ -513,59 +494,49 @@
     padding-bottom:6px;
   }
 
-
   .os-grid{
     gap:8px 21px;
   }
-
 
   .os-item{
     font-size:14px;
     padding:7px 0;
   }
 
-
   .os-item .lbl{
     font-size:12px;
   }
-
 
   .os-item .val{
     font-size:13px;
   }
 
-
-  /* Descrição do problema */
   .os-desc-block{
     font-size:16px;
     line-height:2.5;
     padding:14px 16px;
   }
 
-
-  /* Rodapé */
   .os-footer{
     margin-top:22px;
     padding-top:15px;
   }
-
 
   .os-footer-row{
     font-size:14px;
     gap:23px;
   }
 
-
 }
 
-
-/* Configuração da folha */
 @page{
   size:A4;
   margin:0;
 }
 </style>
-  
+</head>
+<body>
+
 <div class="app">
 
   <div class="app-header">
@@ -645,9 +616,6 @@
 
   var LOGO_SRC = "images-removebg-preview.png";
 
-  // ---------------------------------------------------------------
-  // Field configuration: header text (as it appears in the form) -> internal key
-  // ---------------------------------------------------------------
   var FIELD_DEFS = [
     { key:'carimbo',        headers:['carimbo de data/hora'] },
     { key:'equipe',         headers:['selecione sua equipe:','selecione sua equipe'] },
@@ -660,7 +628,7 @@
     { key:'nomeSetor',      headers:['nome do setor:','nome do setor'] },
     { key:'salaSetor',      headers:['sala do setor:','sala do setor'] },
     { key:'marcaEvap',      headers:['marca da evaporadora:','marca da evaporadora'] },
-    { key:'capacidade',     headers:['capacidade:','capacidade do equipamento:', 'Capacidade da Máquina Evaporadora'] },
+    { key:'capacidade',     headers:['capacidade:','capacidade do equipamento:', 'capacidade da máquina evaporadora'] },
     { key:'tombo',          headers:['tombo: (placa alumínio/adesivo verde)','tombo (placa alumínio/adesivo verde)','tombo:'] },
     { key:'tag',            headers:['tag:  (adesivo branco com qr code)','tag: (adesivo branco com qr code)','tag:'] },
     { key:'solucionado',    headers:['problema solucionado?','problema solucionado'] },
@@ -679,9 +647,6 @@
 
   var state = { chamados: [] };
 
-  // ---------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------
   function norm(s){ return String(s||'').trim().toLowerCase().replace(/\s+/g,' '); }
 
   function val(v){
@@ -726,7 +691,6 @@
     });
   }
 
-  // Build column-index map from a header row, matching against FIELD_DEFS.headers
   function buildColumnMap(headerRow){
     var map = {};
     var normalizedHeaders = headerRow.map(norm);
@@ -764,9 +728,6 @@
     return lines.map(function(l){ return l.split('\t'); });
   }
 
-  // ---------------------------------------------------------------
-  // Screen switching
-  // ---------------------------------------------------------------
   function showScreen(name){
     ['upload','review','os'].forEach(function(s){
       document.getElementById('screen-'+s).classList.toggle('hidden', s!==name);
@@ -777,9 +738,6 @@
     document.getElementById('header-status').textContent = text;
   }
 
-  // ---------------------------------------------------------------
-  // Upload handling
-  // ---------------------------------------------------------------
   var dropzone = document.getElementById('dropzone');
   var fileInput = document.getElementById('file-input');
   var uploadError = document.getElementById('upload-error');
@@ -860,9 +818,6 @@
     showScreen('review');
   }
 
-  // ---------------------------------------------------------------
-  // Review / filter screen
-  // ---------------------------------------------------------------
   var dateFrom = document.getElementById('date-from');
   var dateTo = document.getElementById('date-to');
 
@@ -925,9 +880,6 @@
     showScreen('upload');
   });
 
-  // ---------------------------------------------------------------
-  // OS page generation
-  // ---------------------------------------------------------------
   function statusText(v){
     var n = norm(v);
     if(n==='sim') return 'Sim';
@@ -936,230 +888,80 @@
   }
 
   function buildOSPage(c, index, total){
-  var chamadoNum = val(c.numeroChamado);
-  var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || norm(c.numeroChamado) === '—';
-
-  var bandLabel = 'Manutenção de ar condicionado';
-
-  if(val(c.nomeSetor) !== '—'){
-    bandLabel += ' — ' + val(c.nomeSetor);
-  }
-
-  var dadosLocalizacao = '';
-
-  if(norm(c.localizacao).includes('gabinete')){
-    dadosLocalizacao =
-      osItem('Nº do Gabinete', c.numGabinete) +
-      osItem('Sala', c.sala);
-  }else{
-    dadosLocalizacao =
-      osItem('Nome do Setor', c.nomeSetor) +
-      osItem('Sala do Setor', c.salaSetor);
-  }
-
-
-  return `
-<div class="os-page" id="os-${index}">
-
-  <div class="os-topline">
-
-    <div class="os-brand">
-      <img class="os-mark" src="${LOGO_SRC}" alt="ALECE">
-
-      <div class="os-brand-text">
-        <div class="org">Núcleo de Manutenção Predial</div>
-        <div class="dept">Assembleia Legislativa do Ceará</div>
-      </div>
-    </div>
-
-
-    <div class="os-title-block">
-      <div class="doc-type">Ordem de Serviço</div>
-
-      <div class="chamado-id">
-        ${escapeHtml(chamadoNum)}
-      </div>
-
-      ${
-        semOS 
-        ? '<div class="no-os">Sem número de OS atribuído</div>' 
-        : ''
-      }
-
-    </div>
-
-  </div>
-
-
-
-  <div class="os-band">
-    ${escapeHtml(bandLabel)}
-  </div>
-
-
-
-  <div class="os-meta">
-
-    <div>
-      Data de abertura:
-      <b>${escapeHtml(fmtDateTime(c._timestamp))}</b>
-    </div>
-
-    <div>
-      Equipe:
-      <b>${escapeHtml(val(c.equipe))}</b>
-    </div>
-
-  </div>
-
-
-
-  <div class="os-section-title">
-    Dados do Chamado
-  </div>
-
-
-  <div class="os-grid">
-
-    ${osItem('Anexo', c.anexo)}
-
-    ${osItem('Localização', c.localizacao)}
-
-    ${dadosLocalizacao}
-
-  </div>
-
-
-
-
-  <div class="os-section-title">
-    Dados do Equipamento
-  </div>
-
-
-  <div class="os-grid">
-
-    ${osItem('Marca da Evaporadora', c.marcaEvap)}
-
-    ${osItem('Capacidade', c.capacidade)}
-
-    ${osItem(
-      'Tombo (placa alumínio / adesivo verde)',
-      c.tombo
-    )}
-
-    ${osItem(
-      'Tag (adesivo branco com QR code)',
-      c.tag
-    )}
-
-  </div>
-
-
-
-
-  <div class="os-section-title">
-    Diagnóstico
-  </div>
-
-
-  <div class="os-grid">
-
-
-    <div class="os-item">
-
-      <span class="lbl">
-        Problema solucionado?
-      </span>
-
-      <span class="val diag-plain">
-        ${escapeHtml(statusText(c.solucionado))}
-      </span>
-
-    </div>
-
-
-
-    <div class="os-item">
-
-      <span class="lbl">
-        Água sanitária aplicada / filtros limpos?
-      </span>
-
-      <span class="val diag-plain">
-        ${escapeHtml(statusText(c.aguaSanitaria))}
-      </span>
-
-    </div>
-
-
-
-
-    <div class="os-item full">
-
-      <span class="lbl">
-        Descrição do problema
-      </span>
-
-      <div class="os-desc-block">
-        ${escapeHtml(val(c.descProblema))}
-      </div>
-
-    </div>
-
-
-
-    ${
-      norm(c.pecaFaltando) && val(c.pecaFaltando) !== '—'
-      ?
-      `
-      <div class="os-item full">
-
-        <span class="lbl">
-          Peça / problema pendente para solução
-        </span>
-
-        <div class="os-desc-block">
-          ${escapeHtml(val(c.pecaFaltando))}
-        </div>
-
-      </div>
-      `
-      :
-      ''
+    var chamadoNum = val(c.numeroChamado);
+    var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || norm(c.numeroChamado) === '—';
+
+    var bandLabel = 'Manutenção de ar condicionado';
+    if(val(c.nomeSetor) !== '—'){
+      bandLabel += ' — ' + val(c.nomeSetor);
     }
 
+    var dadosLocalizacao = '';
+    if(norm(c.localizacao).indexOf('gabinete') !== -1){
+      dadosLocalizacao = osItem('Nº do Gabinete', c.numGabinete) + osItem('Sala', c.sala);
+    }else{
+      dadosLocalizacao = osItem('Nome do Setor', c.nomeSetor) + osItem('Sala do Setor', c.salaSetor);
+    }
 
-  </div>
+    return (
+    '<div class="os-page" id="os-'+index+'">' +
+      '<div class="os-topline">' +
+        '<div class="os-brand">' +
+          '<img class="os-mark" src="'+LOGO_SRC+'" alt="ALECE">' +
+          '<div class="os-brand-text">' +
+            '<div class="org">Núcleo de Manutenção Predial</div>' +
+            '<div class="dept">Assembleia Legislativa do Ceará</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="os-title-block">' +
+          '<div class="doc-type">Ordem de Serviço</div>' +
+          '<div class="chamado-id">'+escapeHtml(chamadoNum)+'</div>' +
+          (semOS ? '<div class="no-os">Sem número de OS atribuído</div>' : '') +
+        '</div>' +
+      '</div>' +
 
-  <div class="os-footer">
+      '<div class="os-band">'+escapeHtml(bandLabel)+'</div>' +
 
-    <div class="os-footer-row">
+      '<div class="os-meta">' +
+        '<div>Data de abertura: <b>'+escapeHtml(fmtDateTime(c._timestamp))+'</b></div>' +
+        '<div>Equipe: <b>'+escapeHtml(val(c.equipe))+'</b></div>' +
+      '</div>' +
 
-      <span>
-        Data início do serviço:
-        <b>${escapeHtml(fmtDateOnly(c._timestamp))}</b>
-      </span>
+      '<div class="os-section-title">Dados do Chamado</div>' +
+      '<div class="os-grid">' +
+        osItem('Anexo', c.anexo) +
+        osItem('Localização', c.localizacao) +
+        dadosLocalizacao +
+      '</div>' +
 
-      <span>
-        Hora:
-        <b>${escapeHtml(fmtTimeOnly(c._timestamp) || "__:__")}</b>
-      </span>
+      '<div class="os-section-title">Dados do Equipamento</div>' +
+      '<div class="os-grid">' +
+        osItem('Marca da Evaporadora', c.marcaEvap) +
+        osItem('Capacidade', c.capacidade) +
+        osItem('Tombo (placa alumínio / adesivo verde)', c.tombo) +
+        osItem('Tag (adesivo branco com QR code)', c.tag) +
+      '</div>' +
 
-      <span>
-        Funcionário:
-        <b>${escapeHtml(val(c.equipe))}</b>
-      </span>
+      '<div class="os-section-title">Diagnóstico</div>' +
+      '<div class="os-grid">' +
+        '<div class="os-item"><span class="lbl">Problema solucionado?</span><span class="val diag-plain">'+escapeHtml(statusText(c.solucionado))+'</span></div>' +
+        '<div class="os-item"><span class="lbl">Água sanitária aplicada / filtros limpos?</span><span class="val diag-plain">'+escapeHtml(statusText(c.aguaSanitaria))+'</span></div>' +
+        '<div class="os-item full"><span class="lbl">Descrição do problema</span><div class="os-desc-block">'+escapeHtml(val(c.descProblema))+'</div></div>' +
+        (norm(c.pecaFaltando) && val(c.pecaFaltando) !== '—' ?
+          '<div class="os-item full"><span class="lbl">Peça / problema pendente para solução</span><div class="os-desc-block">'+escapeHtml(val(c.pecaFaltando))+'</div></div>' : '') +
+      '</div>' +
 
-    </div>
-  </div>
+      '<div class="os-footer">' +
+        '<div class="os-footer-row">' +
+          '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
+          '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || "__:__")+'</b></span>' +
+          '<span>Funcionário: <b>'+escapeHtml(val(c.equipe))+'</b></span>' +
+        '</div>' +
+      '</div>' +
 
-  <div class="os-page-number">
-    ${index+1} / ${total}
-  </div>
-</div>
-`;
-}
+      '<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
+    '</div>');
+  }
 
   function osItem(label, value){
     return '<div class="os-item"><span class="lbl">'+escapeHtml(label)+'</span><span class="val">'+escapeHtml(val(value))+'</span></div>';
