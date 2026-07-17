@@ -9,10 +9,6 @@
   --azul:#1F4E78;
   --azul-escuro:#163A5B;
   --azul-claro:#EEF3F8;
-  --verde:#2E7D32;
-  --verde-bg:#DCEFDD;
-  --amarelo:#9C6500;
-  --amarelo-bg:#FFF3CD;
   --vermelho:#C00000;
   --vermelho-bg:#FBE1E1;
   --texto:#1C2530;
@@ -84,6 +80,7 @@
     padding:8px 14px;
     border-radius:999px;
 }
+  .badge-count:empty{ display:none; }
 
   .hidden{ display:none !important; }
 
@@ -141,7 +138,7 @@
     align-items:center;
     gap:12px;
     margin:22px 0;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     font-size:11px;
     text-transform:uppercase;
     letter-spacing:1px;
@@ -158,7 +155,7 @@
   }
   .paste-area label{
     font-size:12px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     display:block;
     margin-bottom:8px;
   }
@@ -171,7 +168,7 @@
     font-family:var(--mono);
     font-size:11.5px;
     resize:vertical;
-    color:var(--ink);
+    color:var(--texto);
   }
   textarea#paste-input:focus{ outline:2px solid var(--focus); outline-offset:1px; }
   .btn-row{ display:flex; gap:10px; margin-top:12px; }
@@ -191,14 +188,14 @@
   .btn-primary:hover{ filter:brightness(1.08); }
   .btn:focus-visible, .file-input-label:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
   .btn-ghost{
-    border-color:transparent;
-    color:var(--ink-soft);
+    background:transparent;
+    color:var(--texto-suave);
   }
-  .btn-ghost:hover{ background:var(--band); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--band); color:var(--texto); }
 
   .error-msg{
-    background:var(--accent-red-bg);
-    color:var(--accent);
+    background:var(--vermelho-bg);
+    color:var(--vermelho);
     padding:10px 14px;
     border-radius:2px;
     font-size:12.5px;
@@ -223,20 +220,20 @@
     font-size:11px;
     text-transform:uppercase;
     letter-spacing:.6px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
   }
   .field input[type=date]{
     border:1px solid var(--line-soft);
     border-radius:2px;
     padding:7px 9px;
     font-size:13px;
-    color:var(--ink);
+    color:var(--texto);
   }
   .field input:focus{ outline:2px solid var(--focus); outline-offset:1px; }
   .count-pill{
     margin-left:auto;
     font-size:12px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     font-family:var(--mono);
   }
 
@@ -250,7 +247,7 @@
     font-size:10.5px;
     text-transform:uppercase;
     letter-spacing:.5px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     padding:10px 12px;
     border-bottom:1px solid var(--line);
     background:#FAF9F5;
@@ -267,7 +264,7 @@
   .empty-state{
     padding:60px 24px;
     text-align:center;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     font-size:13px;
   }
 
@@ -302,13 +299,13 @@
   .os-nav a{
     font-family:var(--mono);
     font-size:11px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     border:1px solid var(--line-soft);
     padding:4px 8px;
     border-radius:2px;
     text-decoration:none;
   }
-  .os-nav a:hover{ border-color:var(--ink); color:var(--ink); }
+  .os-nav a:hover{ border-color:var(--texto); color:var(--texto); }
 
   .os-page{
     background:var(--sheet);
@@ -324,7 +321,7 @@
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
-    border-bottom:2px solid var(--ink);
+    border-bottom:2px solid var(--texto);
     padding-bottom:18px;
     margin-bottom:14px;
     break-inside:avoid;
@@ -340,11 +337,11 @@
     flex-shrink:0;
   }
   .os-brand-text .org{ font-family:var(--serif); font-size:18px; font-weight:700; letter-spacing:.2px; }
-  .os-brand-text .dept{ font-size:10.5px; color:var(--ink-soft); }
+  .os-brand-text .dept{ font-size:10.5px; color:var(--texto-suave); }
   .os-title-block{ text-align:right; }
-  .os-title-block .doc-type{ font-family:var(--serif); font-size:13px; font-style:italic; color:var(--ink-soft); }
+  .os-title-block .doc-type{ font-family:var(--serif); font-size:13px; font-style:italic; color:var(--texto-suave); }
   .os-title-block .chamado-id{ font-family:var(--mono); font-size:15px; font-weight:700; margin-top:2px; }
-  .os-title-block .no-os{ font-family:var(--mono); font-size:10.5px; color:var(--accent); margin-top:2px; }
+  .os-title-block .no-os{ font-family:var(--mono); font-size:10.5px; color:var(--vermelho); margin-top:2px; }
 
   .os-band{
     background:var(--band);
@@ -360,11 +357,11 @@
     display:flex;
     gap:40px;
     font-size:12.5px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     margin-bottom:34px;
     break-inside:avoid;
   }
-  .os-meta b{ color:var(--ink); font-weight:600; }
+  .os-meta b{ color:var(--texto); font-weight:600; }
 
   .os-section-title{
     font-family:var(--serif);
@@ -393,7 +390,7 @@
     font-size:10px;
     text-transform:uppercase;
     letter-spacing:.5px;
-    color:var(--ink-soft);
+    color:var(--texto-suave);
     margin-bottom:2px;
   }
   .os-item .val{ font-size:15px; }
@@ -425,7 +422,7 @@
     font-size:13px;
     margin-bottom:22px;
   }
-  .os-footer-row span{ color:var(--ink-soft); }
+  .os-footer-row span{ color:var(--texto-suave); }
   .os-footer-row b{ font-weight:600; }
 
 /* ---------- print rules ---------- */
@@ -575,6 +572,17 @@
         <input type="file" id="file-input" accept=".xlsx,.xls,.csv">
       </div>
 
+      <div class="divider-or">ou</div>
+
+      <div class="paste-area">
+        <label for="paste-input">Colar dados copiados da planilha (cabeçalho na primeira linha)</label>
+        <textarea id="paste-input" placeholder="Cole aqui as linhas copiadas do Excel/Forms..."></textarea>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btn-parse-paste">Processar dados colados</button>
+          <button class="btn btn-ghost" id="btn-sample">Usar exemplo</button>
+        </div>
+      </div>
+
       <div id="upload-error" class="error-msg hidden"></div>
     </div>
   </section>
@@ -681,17 +689,6 @@
     function p(n){ return n<10?'0'+n:''+n; }
     return p(dt.getDate())+'/'+p(dt.getMonth()+1)+'/'+dt.getFullYear()+' '+p(dt.getHours())+':'+p(dt.getMinutes());
   }
-  function fmtDateOnly(dt){
-    if(!dt) return '—';
-    function p(n){ return n<10?'0'+n:''+n; }
-    return p(dt.getDate())+'/'+p(dt.getMonth()+1)+'/'+dt.getFullYear();
-  }
-  function fmtTimeOnly(dt){
-    if(!dt) return '';
-    function p(n){ return n<10?'0'+n:''+n; }
-    return p(dt.getHours())+':'+p(dt.getMinutes());
-  }
-
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, function(c){
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
