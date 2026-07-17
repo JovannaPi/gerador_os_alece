@@ -962,16 +962,6 @@
           '<div class="os-item full"><span class="lbl">Peça / problema pendente para solução</span><div class="os-desc-block">'+escapeHtml(val(c.pecaFaltando))+'</div></div>' : '') +
       '</div>' +
 
-      '<div class="os-footer">' +
-        '<div class="os-footer-row">' +
-          '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
-          '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || '__:__')+'</b></span>' +
-          '<span>Funcionário: <b>'+escapeHtml(equipeNomes)+'</b></span>' +
-        '</div>' +
-      '</div>' +
-
-      '<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
-
     '</div>'
     );
   }
