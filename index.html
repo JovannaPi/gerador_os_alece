@@ -90,42 +90,45 @@
   /* ---------- upload screen ---------- */
   .card{
     background:var(--sheet);
-    border:1px solid var(--line-soft);
-    border-radius:2px;
-  }
+    border:1px solid var(--borda);
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+    overflow:hidden;
+}
   .dropzone{
-    border:1.5px dashed var(--line);
-    border-radius:2px;
+    border:2px dashed var(--line);
+    border-radius:12px;
     padding:48px 24px;
     text-align:center;
     background:var(--sheet);
     transition:border-color .15s ease, background .15s ease;
   }
   .dropzone.drag{
-    border-color:var(--ink);
-    background:#FBFAF7;
+    border-color:var(--azul);
+    background:var(--azul-claro);
   }
   .dropzone h2{
-    font-family:var(--serif);
-    font-size:18px;
-    margin:0 0 6px;
+    font-family:var(--sans);
+    font-size:24px;
+    color:var(--azul-escuro);
+    font-weight:700;
   }
   .dropzone p{
-    color:var(--ink-soft);
-    font-size:13px;
+    color:var(--texto-suave);
+    font-size:14px;
     margin:0 0 20px;
   }
   .file-input-label{
     display:inline-block;
-    padding:10px 22px;
-    background:var(--ink);
-    color:#fff;
-    border-radius:2px;
-    font-size:13px;
+    background:var(--azul);
+    color:white;
+    padding:12px 26px;
+    border-radius:8px;
+    font-size:14px;
     font-weight:600;
-    letter-spacing:.2px;
-  }
-  .file-input-label:hover{ background:#33455A; }
+    transition:.2s;
+}
+  .file-input-label:hover{filter:brightness(1.08);
   #file-input{ display:none; }
 
   .divider-or{
@@ -168,20 +171,19 @@
   textarea#paste-input:focus{ outline:2px solid var(--focus); outline-offset:1px; }
   .btn-row{ display:flex; gap:10px; margin-top:12px; }
   .btn{
-    border:1px solid var(--ink);
-    background:var(--sheet);
-    color:var(--ink);
-    padding:9px 18px;
-    border-radius:2px;
-    font-size:12.5px;
+    border:none;
+    border-radius:8px;
+    padding:10px 20px;
+    font-size:14px;
     font-weight:600;
+    transition:.15s;
   }
-  .btn:hover{ background:var(--ink); color:#fff; }
+  .btn:hover{ transform:translateY(-1px); }
   .btn-primary{
-    background:var(--ink);
-    color:#fff;
+    background:var(--azul);
+    color:white;
   }
-  .btn-primary:hover{ background:#33455A; }
+  .btn-primary:hover{ filter:brightness(1.08); }
   .btn:focus-visible, .file-input-label:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
   .btn-ghost{
     border-color:transparent;
