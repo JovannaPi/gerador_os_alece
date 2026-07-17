@@ -296,9 +296,9 @@
     border:1px solid var(--line-soft);
     box-shadow:0 1px 3px rgba(30,42,56,0.08), 0 6px 18px rgba(30,42,56,0.06);
     border-radius:2px;
-    padding:44px 48px 40px;
-    margin:0 auto 40px;
-    max-width:820px;
+    padding:58px 62px 54px;
+    margin:0 auto 44px;
+    max-width:850px;
     page-break-after:always;
     break-inside:avoid;
   }
@@ -307,8 +307,8 @@
     justify-content:space-between;
     align-items:flex-start;
     border-bottom:2px solid var(--ink);
-    padding-bottom:14px;
-    margin-bottom:4px;
+    padding-bottom:18px;
+    margin-bottom:14px;
   }
   .os-brand{
     display:flex;
@@ -329,39 +329,39 @@
 
   .os-band{
     background:var(--band);
-    padding:9px 14px;
-    font-size:13px;
+    padding:12px 16px;
+    font-size:13.5px;
     font-weight:600;
-    margin:16px 0 18px;
+    margin:22px 0 26px;
     letter-spacing:.2px;
   }
 
   .os-meta{
     display:flex;
-    gap:32px;
-    font-size:12px;
+    gap:40px;
+    font-size:12.5px;
     color:var(--ink-soft);
-    margin-bottom:26px;
+    margin-bottom:34px;
   }
   .os-meta b{ color:var(--ink); font-weight:600; }
 
   .os-section-title{
     font-family:var(--serif);
-    font-size:14.5px;
+    font-size:15px;
     font-weight:700;
-    margin:22px 0 12px;
-    padding-bottom:5px;
+    margin:30px 0 16px;
+    padding-bottom:7px;
     border-bottom:1px solid var(--line);
   }
 
   .os-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px 28px;
+    gap:15px 36px;
   }
   .os-item{
-    font-size:15px;
-    padding:7px 0;
+    font-size:15.5px;
+    padding:10px 0;
     border-bottom:1px dotted var(--line-soft);
   }
   .os-item .lbl{
@@ -378,37 +378,29 @@
   .diag-plain{ font-weight:700; }
 
   .os-desc-block{
-    font-size:15px;
-    line-height:1.7;
+    font-size:15.5px;
+    line-height:1.8;
     background:#FAF9F5;
     border:1px solid var(--line-soft);
-    padding:12px 14px;
+    padding:16px 18px;
     border-radius:2px;
-    margin-top:4px;
+    margin-top:6px;
     white-space:pre-wrap;
   }
 
   .os-footer{
-    margin-top:38px;
-    padding-top:20px;
+    margin-top:48px;
+    padding-top:26px;
     border-top:1px solid var(--line);
   }
   .os-footer-row{
     display:flex;
-    gap:40px;
-    font-size:12.5px;
+    gap:48px;
+    font-size:13px;
     margin-bottom:22px;
   }
   .os-footer-row span{ color:var(--ink-soft); }
   .os-footer-row b{ font-weight:600; }
-
-  .os-page-number{
-    text-align:right;
-    font-size:10.5px;
-    color:var(--ink-soft);
-    margin-top:18px;
-    font-family:var(--mono);
-  }
 
 /* ---------- print rules ---------- */
 @media print{
@@ -441,7 +433,7 @@
     max-width:none;
     box-shadow:none;
     border-radius:0;
-    padding:18mm 20mm;
+    padding:22mm 24mm;
     page-break-after:always;
     break-inside:avoid;
   }
@@ -451,8 +443,8 @@
   }
 
   .os-topline{
-    margin-bottom:10px;
-    padding-bottom:10px;
+    margin-bottom:16px;
+    padding-bottom:14px;
   }
 
   .os-brand img.os-mark{
@@ -476,31 +468,31 @@
   }
 
   .os-band{
-    margin:12px 0 14px;
-    padding:9px 12px;
-    font-size:15px;
+    margin:18px 0 20px;
+    padding:12px 15px;
+    font-size:15.5px;
   }
 
   .os-meta{
     font-size:14px;
-    margin-bottom:18px;
-    gap:23px;
+    margin-bottom:26px;
+    gap:30px;
   }
 
   .os-section-title{
-    font-size:15px;
+    font-size:15.5px;
     text-transform:uppercase;
-    margin:17px 0 10px;
-    padding-bottom:6px;
+    margin:24px 0 14px;
+    padding-bottom:8px;
   }
 
   .os-grid{
-    gap:8px 21px;
+    gap:12px 28px;
   }
 
   .os-item{
-    font-size:14px;
-    padding:7px 0;
+    font-size:14.5px;
+    padding:9px 0;
   }
 
   .os-item .lbl{
@@ -513,18 +505,18 @@
 
   .os-desc-block{
     font-size:16px;
-    line-height:2.5;
-    padding:14px 16px;
+    line-height:2.6;
+    padding:18px 20px;
   }
 
   .os-footer{
-    margin-top:22px;
-    padding-top:15px;
+    margin-top:32px;
+    padding-top:20px;
   }
 
   .os-footer-row{
     font-size:14px;
-    gap:23px;
+    gap:30px;
   }
 
 }
@@ -970,8 +962,6 @@
           '<span>Funcionário(s): <b>'+escapeHtml(equipeNomes)+'</b></span>' +
         '</div>' +
       '</div>' +
-
-      '<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
     '</div>');
   }
 
