@@ -6,27 +6,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   :root{
-    --paper:#F4F2EC;
-    --sheet:#FFFFFF;
-    --ink:#1E2A38;
-    --ink-soft:#5B6674;
-    --line:#CFC7B4;
-    --line-soft:#E4DFD3;
-    --band:#DCE3E6;
-    --accent:#8B2E2E;
-    --accent-green:#2F5D50;
-    --accent-green-bg:#E4EEEA;
-    --accent-red-bg:#F3E3E1;
-    --focus:#1E2A38;
-    --serif: Georgia, 'Times New Roman', serif;
-    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  }
+  --azul:#1F4E78;
+  --azul-escuro:#163A5B;
+  --azul-claro:#EEF3F8;
+  --verde:#2E7D32;
+  --verde-bg:#DCEFDD;
+  --amarelo:#9C6500;
+  --amarelo-bg:#FFF3CD;
+  --vermelho:#C00000;
+  --vermelho-bg:#FBE1E1;
+  --texto:#1C2530;
+  --texto-suave:#5B6B7A;
+  --borda:#DCE3EA;
+  --paper:#F6F8FA;
+  --sheet:#FFFFFF;
+  --line:#DCE3EA;
+  --line-soft:#EEF2F6;
+  --band:#EEF3F8;
+  --focus:#1F4E78;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans:"Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:Consolas, monospace;
+}
   *{box-sizing:border-box;}
   body{
     margin:0;
     background:var(--paper);
-    color:var(--ink);
+    color:var(--texto);
     font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
   }
@@ -39,9 +45,9 @@
 
   /* ---------- layout shells ---------- */
   .app{
-    max-width:1000px;
+    max-width:1100px;
     margin:0 auto;
-    padding:40px 24px 80px;
+    padding:30px 22px 60px;
   }
   .app-header{
     display:flex;
