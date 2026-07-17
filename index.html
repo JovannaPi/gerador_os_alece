@@ -887,9 +887,21 @@
     return val(v);
   }
 
+  // "Equipe 5: José e Mateus" -> { num:'5', nomes:'José e Mateus' }
+  // Avoids repeating the word "equipe" when the label already says it.
+  function parseEquipe(v){
+    var s = String(v||'').trim();
+    var m = s.match(/^equipe\s*([^\s:]+)\s*:\s*(.+)$/i);
+    if(m){ return { num:m[1].trim(), nomes:m[2].trim() }; }
+    return { num:'', nomes: s || '' };
+  }
+
   function buildOSPage(c, index, total){
     var chamadoNum = val(c.numeroChamado);
     var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || norm(c.numeroChamado) === '—';
+    var eq = parseEquipe(c.equipe);
+    var equipeLabel = eq.num ? ('Equipe '+eq.num+':') : 'Equipe:';
+    var equipeNomes = eq.nomes || val(c.equipe);
 
     var bandLabel = 'Manutenção de ar condicionado';
     if(val(c.nomeSetor) !== '—'){
@@ -924,7 +936,7 @@
 
       '<div class="os-meta">' +
         '<div>Data de abertura: <b>'+escapeHtml(fmtDateTime(c._timestamp))+'</b></div>' +
-        '<div>Equipe: <b>'+escapeHtml(val(c.equipe))+'</b></div>' +
+        '<div>'+escapeHtml(equipeLabel)+' <b>'+escapeHtml(equipeNomes)+'</b></div>' +
       '</div>' +
 
       '<div class="os-section-title">Dados do Chamado</div>' +
@@ -955,7 +967,7 @@
         '<div class="os-footer-row">' +
           '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
           '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || "__:__")+'</b></span>' +
-          '<span>Funcionário: <b>'+escapeHtml(val(c.equipe))+'</b></span>' +
+          '<span>Funcionário(s): <b>'+escapeHtml(equipeNomes)+'</b></span>' +
         '</div>' +
       '</div>' +
 
