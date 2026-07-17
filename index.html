@@ -159,19 +159,6 @@
     display:block;
     margin-bottom:8px;
   }
-  textarea#paste-input{
-    width:100%;
-    min-height:110px;
-    border:1px solid var(--line-soft);
-    border-radius:2px;
-    padding:10px 12px;
-    font-family:var(--mono);
-    font-size:11.5px;
-    resize:vertical;
-    color:var(--texto);
-  }
-  textarea#paste-input:focus{ outline:2px solid var(--focus); outline-offset:1px; }
-  .btn-row{ display:flex; gap:10px; margin-top:12px; }
   .btn{
     border:none;
     border-radius:8px;
@@ -572,17 +559,6 @@
         <input type="file" id="file-input" accept=".xlsx,.xls,.csv">
       </div>
 
-      <div class="divider-or">ou</div>
-
-      <div class="paste-area">
-        <label for="paste-input">Colar dados copiados da planilha (cabeçalho na primeira linha)</label>
-        <textarea id="paste-input" placeholder="Cole aqui as linhas copiadas do Excel/Forms..."></textarea>
-        <div class="btn-row">
-          <button class="btn btn-primary" id="btn-parse-paste">Processar dados colados</button>
-          <button class="btn btn-ghost" id="btn-sample">Usar exemplo</button>
-        </div>
-      </div>
-
       <div id="upload-error" class="error-msg hidden"></div>
     </div>
   </section>
@@ -651,13 +627,6 @@
     { key:'aguaSanitaria',  headers:['foi colocado água sanitária na evaporadora e limpado os filtros?','foi colocado água sanitária na evaporadora e limpado os filtros'] }
   ];
 
-  var SAMPLE_TSV =
-"Carimbo de data/hora\tSelecione sua equipe:\tNº do chamado:\tCaso existam outros chamados para o mesmo local, descrever o número da ordem de serviço:\tAnexo:\tLocalização:\tNº do Gabinete:\tSala:\tNome do Setor:\tSala do Setor:\tMarca da Evaporadora:\tTombo: (PLACA ALUMÍNIO/ADESIVO VERDE)\tTag:  (ADESIVO BRANCO COM QR CODE)\tProblema solucionado?\tDescreva o problema do chamado?\tQual o problema ou peça que está faltando para solucionar o chamado?\tFoi colocado água sanitária na evaporadora e limpado os filtros?\n" +
-"14/07/2026 09:19:38\tEquipe 6: José e Mateus\tChamado sem OS\tNão existe outro chamado\tAnexo 2\tSetor\t\t\t3 andar\tDutos\tHitachi\tSem tombo\tSem tombo\tSim\tAs duas correias estavam em péssimo estado uma ja quebrada.\t\tNão\n" +
-"14/07/2026 16:07:29\tEquipe 5: Italo e Leandro\t2026070336\tNão existe outro chamado\tSede\tSetor\t\t\t1° secretaria\tRecepção\tMidea\t10952\t24556\tSim\tDreno solto\t\tNão\n" +
-"14/07/2026 16:44:25\tEquipe 3: Marcílio e Janderson\t2026070325\tNão existe outro chamado\tAnexo 1\tSetor\t\t\tBanheiro feminino\tBanheiro feminino\tFujitsu\tOutros\tOutros\tSim\tCongelada\t\tNão\n" +
-"15/07/2026 09:29:10\tEquipe 5: Italo e Leandro\t2026070343\tNão existe outro chamado\tAnexo 3\tSetor\t\t\tComitê de prevenção e combate a violência\tSala principal\tLG\t*****\t*****\tSim\tMáquina sem defeito\t\tNão\n" +
-"15/07/2026 16:00:00\tEquipe 3: Marcílio e Janderson\t2026070349\t2026070348\tAnexo 1\tGabinete\t303\tSala dos Assessores\t\t\tMidea\t14294\t23392\tSim\tVazamento de gás\t\tNão\n";
 
   var state = { chamados: [] };
 
@@ -727,11 +696,6 @@
     return out;
   }
 
-  function parseTSVText(text){
-    var lines = text.split(/\r\n|\r|\n/).filter(function(l){ return l.trim()!==''; });
-    return lines.map(function(l){ return l.split('\t'); });
-  }
-
   function showScreen(name){
     ['upload','review','os'].forEach(function(s){
       document.getElementById('screen-'+s).classList.toggle('hidden', s!==name);
@@ -792,24 +756,6 @@
     if(isCsv) reader.readAsText(file, 'UTF-8');
     else reader.readAsArrayBuffer(file);
   }
-
-  document.getElementById('btn-parse-paste').addEventListener('click', function(){
-    clearUploadError();
-    var text = document.getElementById('paste-input').value;
-    if(!text.trim()){ showUploadError('Cole os dados (com o cabeçalho na primeira linha) antes de processar.'); return; }
-    try{
-      var rows = parseTSVText(text);
-      processRows(rows);
-    }catch(err){
-      showUploadError('Não consegui interpretar esses dados. Confira se as colunas estão separadas por tabulação.');
-    }
-  });
-
-  document.getElementById('btn-sample').addEventListener('click', function(){
-    document.getElementById('paste-input').value = SAMPLE_TSV;
-    clearUploadError();
-    processRows(parseTSVText(SAMPLE_TSV));
-  });
 
   function processRows(rows){
     var chamados = rowsToChamados(rows);
