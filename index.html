@@ -651,6 +651,7 @@
     if(v===undefined||v===null) return '—';
     var s=String(v).trim();
     if(s==='') return '—';
+    s = s.replace(/^"|"$/g, '').trim();
     if(/^\*+$/.test(s)) return 'Não informado';
     return s;
   }
@@ -953,13 +954,26 @@
       '</div>' +
 
       '<div class="os-section-title">Diagnóstico</div>' +
-      '<div class="os-grid">' +
+            '<div class="os-grid">' +
         '<div class="os-item"><span class="lbl">Problema solucionado?</span><span class="val diag-plain">'+escapeHtml(statusText(c.solucionado))+'</span></div>' +
         '<div class="os-item"><span class="lbl">Água sanitária aplicada / filtros limpos?</span><span class="val diag-plain">'+escapeHtml(statusText(c.aguaSanitaria))+'</span></div>' +
         '<div class="os-item full"><span class="lbl">Descrição do problema</span><div class="os-desc-block">'+escapeHtml(val(c.descProblema))+'</div></div>' +
         (norm(c.pecaFaltando) && val(c.pecaFaltando) !== '—' ?
           '<div class="os-item full"><span class="lbl">Peça / problema pendente para solução</span><div class="os-desc-block">'+escapeHtml(val(c.pecaFaltando))+'</div></div>' : '') +
-      '</div>' );
+      '</div>' +
+
+      '<div class="os-footer">' +
+        '<div class="os-footer-row">' +
+          '<span>Data início do serviço: <b>'+escapeHtml(fmtDateOnly(c._timestamp))+'</b></span>' +
+          '<span>Hora: <b>'+escapeHtml(fmtTimeOnly(c._timestamp) || '__:__')+'</b></span>' +
+          '<span>Funcionário: <b>'+escapeHtml(equipeNomes)+'</b></span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="os-page-number">'+(index+1)+' / '+total+'</div>' +
+
+    '</div>'
+    );
   }
 
   function osItem(label, value){
