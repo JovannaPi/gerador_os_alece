@@ -397,20 +397,55 @@
     break-inside:avoid;
   }
 
-  .os-footer{
-    margin-top:48px;
-    padding-top:26px;
-    border-top:1px solid var(--line);
-    break-inside:avoid;
+  /* ---------- ADIÇÕES PARA A OS DE COMPROVAÇÃO ---------- */
+  .os-status-box {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: var(--azul-claro);
+    color: var(--azul-escuro);
+    border: 1px solid var(--azul);
+    margin-top: 4px;
   }
-  .os-footer-row{
-    display:flex;
-    gap:48px;
-    font-size:13px;
-    margin-bottom:22px;
+  
+  .os-materials {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    break-inside: avoid;
   }
-  .os-footer-row span{ color:var(--texto-suave); }
-  .os-footer-row b{ font-weight:600; }
+  .os-materials th, .os-materials td {
+    border: 1px solid var(--line);
+    padding: 8px;
+    font-size: 13px;
+    text-align: left;
+  }
+  .os-materials th { background: var(--paper); color: var(--texto-suave); }
+
+  .os-signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    gap: 40px;
+    break-inside: avoid;
+  }
+  .signature-block {
+    flex: 1;
+    text-align: center;
+    border-top: 1px solid var(--texto);
+    padding-top: 8px;
+  }
+  .signature-block p {
+    margin: 4px 0 0;
+    font-size: 13px;
+  }
+  .signature-block .sub-text {
+    font-size: 11px;
+    color: var(--texto-suave);
+  }
 
 /* ---------- print rules ---------- */
 @media print{
@@ -443,7 +478,7 @@
     max-width:none;
     box-shadow:none;
     border-radius:0;
-    padding:22mm 24mm;
+    padding:15mm 20mm; /* Margens otimizadas para impressão */
     page-break-after:always;
   }
 
@@ -513,21 +548,14 @@
   }
 
   .os-desc-block{
-    font-size:16px;
-    line-height:2.6;
-    padding:18px 20px;
+    font-size:15px;
+    line-height:1.6;
+    padding:14px 16px;
   }
 
-  .os-footer{
-    margin-top:32px;
-    padding-top:20px;
+  .os-signatures{
+    margin-top: 40px;
   }
-
-  .os-footer-row{
-    font-size:14px;
-    gap:30px;
-  }
-
 }
 
 @page{
@@ -837,8 +865,6 @@
     return val(v);
   }
 
-  // "Equipe 5: José e Mateus" -> { num:'5', nomes:'José e Mateus' }
-  // Avoids repeating the word "equipe" when the label already says it.
   function parseEquipe(v){
     var s = String(v||'').trim();
     var m = s.match(/^equipe\s*([^\s:]+)\s*:\s*(.+)$/i);
@@ -846,6 +872,11 @@
     return { num:'', nomes: s || '' };
   }
 
+  function osItem(label, value){
+    return '<div class="os-item"><span class="lbl">'+escapeHtml(label)+'</span><span class="val">'+escapeHtml(val(value))+'</span></div>';
+  }
+
+  // NOVA FUNÇÃO COM O VISUAL DE COMPROVAÇÃO
   function buildOSPage(c, index, total){
     var chamadoNum = val(c.numeroChamado);
     var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || norm(c.numeroChamado) === '—';
@@ -853,7 +884,7 @@
     var equipeLabel = eq.num ? ('Equipe '+eq.num+':') : 'Equipe:';
     var equipeNomes = eq.nomes || val(c.equipe);
 
-    var bandLabel = 'Manutenção de ar condicionado';
+    var bandLabel = 'Manutenção de Ar Condicionado';
     if(val(c.nomeSetor) !== '—'){
       bandLabel += ' — ' + val(c.nomeSetor);
     }
@@ -865,60 +896,92 @@
       dadosLocalizacao = osItem('Nome do Setor', c.nomeSetor) + osItem('Sala do Setor', c.salaSetor);
     }
 
-    return (
-    '<div class="os-page" id="os-'+index+'">' +
-      '<div class="os-topline">' +
-        '<div class="os-brand">' +
-          '<img class="os-mark" src="'+LOGO_SRC+'" alt="ALECE">' +
-          '<div class="os-brand-text">' +
-            '<div class="org">Núcleo de Manutenção Predial</div>' +
-            '<div class="dept">Assembleia Legislativa do Ceará</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="os-title-block">' +
-          '<div class="doc-type">Ordem de Serviço</div>' +
-          '<div class="chamado-id">'+escapeHtml(chamadoNum)+'</div>' +
-          (semOS ? '<div class="no-os">Sem número de OS atribuído</div>' : '') +
-        '</div>' +
-      '</div>' +
+    var htmlPendencia = '';
+    if (norm(c.pecaFaltando) && val(c.pecaFaltando) !== '—') {
+      htmlPendencia = '<div class="os-item full"><span class="lbl">Peça / Problema pendente:</span>' +
+                      '<div class="os-desc-block">' + escapeHtml(val(c.pecaFaltando)) + '</div></div>';
+    }
 
-      '<div class="os-band">'+escapeHtml(bandLabel)+'</div>' +
+    return `
+    <div class="os-page" id="os-${index}">
+      
+      <div class="os-topline">
+        <div class="os-brand">
+          <img class="os-mark" src="${LOGO_SRC}" alt="ALECE">
+          <div class="os-brand-text">
+            <div class="org">Núcleo de Manutenção Predial</div>
+            <div class="dept">Assembleia Legislativa do Ceará</div>
+          </div>
+        </div>
+        <div class="os-title-block">
+          <div class="doc-type">Ordem de Serviço (OS)</div>
+          <div class="chamado-id">${escapeHtml(chamadoNum)}</div>
+          ${semOS ? '<div class="no-os">Sem número de OS atribuído</div>' : ''}
+          <div class="os-status-box">Documento de Comprovação</div>
+        </div>
+      </div>
 
-      '<div class="os-meta">' +
-        '<div>Data de fechamento: <b>'+escapeHtml(fmtDateTime(c._timestamp))+'</b></div>' +
-        '<div>'+escapeHtml(equipeLabel)+' <b>'+escapeHtml(equipeNomes)+'</b></div>' +
-      '</div>' +
+      <div class="os-band">${escapeHtml(bandLabel)}</div>
 
-      '<div class="os-section-title">Dados do Chamado</div>' +
-      '<div class="os-grid">' +
-        osItem('Anexo', c.anexo) +
-        osItem('Localização', c.localizacao) +
-        dadosLocalizacao +
-      '</div>' +
+      <!-- RASTREABILIDADE -->
+      <div class="os-meta">
+        <div>Abertura / Fechamento do chamado: <b>${escapeHtml(fmtDateTime(c._timestamp))}</b></div>
+        <div>Início do Serviço: <b>___/___/_____ às ___:___</b></div>
+        <div>Fim do Serviço: <b>___/___/_____ às ___:___</b></div>
+      </div>
 
-      '<div class="os-section-title">Dados do Equipamento</div>' +
-      '<div class="os-grid">' +
-        osItem('Marca da Evaporadora', c.marcaEvap) +
-        osItem('Capacidade', c.capacidade) +
-        osItem('Tombo (placa alumínio / adesivo verde)', c.tombo) +
-        osItem('Tag (adesivo branco com QR code)', c.tag) +
-      '</div>' +
+      <!-- DADOS DO LOCAL E EQUIPAMENTO -->
+      <div class="os-section-title">1. Localização e Equipamento</div>
+      <div class="os-grid">
+        ${osItem('Anexo', c.anexo)}
+        ${osItem('Localização', c.localizacao)}
+        ${dadosLocalizacao}
+        ${osItem('Marca da Evaporadora', c.marcaEvap)}
+        ${osItem('Capacidade', c.capacidade)}
+        ${osItem('Tombo / Patrimônio', c.tombo)}
+        ${osItem('Tag (QR Code)', c.tag)}
+      </div>
 
-      '<div class="os-section-title">Diagnóstico</div>' +
-            '<div class="os-grid">' +
-        '<div class="os-item"><span class="lbl">Problema solucionado?</span><span class="val diag-plain">'+escapeHtml(statusText(c.solucionado))+'</span></div>' +
-        '<div class="os-item"><span class="lbl">Água sanitária aplicada / filtros limpos?</span><span class="val diag-plain">'+escapeHtml(statusText(c.aguaSanitaria))+'</span></div>' +
-        '<div class="os-item full"><span class="lbl">Descrição do problema</span><div class="os-desc-block">'+escapeHtml(val(c.descProblema))+'</div></div>' +
-        (norm(c.pecaFaltando) && val(c.pecaFaltando) !== '—' ?
-          '<div class="os-item full"><span class="lbl">Peça / problema pendente para solução</span><div class="os-desc-block">'+escapeHtml(val(c.pecaFaltando))+'</div></div>' : '') +
-      '</div>' +
+      <!-- RELATO ORIGINAL -->
+      <div class="os-section-title">2. Relato do Chamado</div>
+      <div class="os-grid">
+        <div class="os-item full">
+          <div class="os-desc-block">${escapeHtml(val(c.descProblema))}</div>
+        </div>
+      </div>
 
-    '</div>'
-    );
-  }
+      <!-- RELATÓRIO TÉCNICO -->
+      <div class="os-section-title">3. Relatório de Execução Técnica</div>
+      <div class="os-grid">
+        <div class="os-item"><span class="lbl">${escapeHtml(equipeLabel)}</span><span class="val">${escapeHtml(equipeNomes)}</span></div>
+        <div class="os-item"><span class="lbl">Problema Solucionado?</span><span class="val diag-plain">${escapeHtml(statusText(c.solucionado))}</span></div>
+        <div class="os-item"><span class="lbl">Água sanitária aplicada / filtros limpos?</span><span class="val diag-plain">${escapeHtml(statusText(c.aguaSanitaria))}</span></div>
+        ${htmlPendencia}
+      </div>
 
-  function osItem(label, value){
-    return '<div class="os-item"><span class="lbl">'+escapeHtml(label)+'</span><span class="val">'+escapeHtml(val(value))+'</span></div>';
+      <!-- MATERIAIS E ASSINATURAS -->
+      <div class="os-section-title">4. Materiais Aplicados e Assinaturas</div>
+      
+      <table class="os-materials">
+        <tr><th>Qtd</th><th>Unid.</th><th>Descrição do Material Utilizado</th></tr>
+        <tr><td>&nbsp;</td><td></td><td></td></tr>
+        <tr><td>&nbsp;</td><td></td><td></td></tr>
+        <tr><td>&nbsp;</td><td></td><td></td></tr>
+      </table>
+
+      <div class="os-signatures">
+        <div class="signature-block">
+          <p><b>Assinatura do Técnico</b></p>
+          <p class="sub-text">Atesto a veracidade do serviço prestado.</p>
+        </div>
+        <div class="signature-block">
+          <p><b>Responsável pelo Setor</b></p>
+          <p class="sub-text">Atesto que o serviço foi concluído satisfatoriamente<br>e o local deixado limpo e organizado.</p>
+        </div>
+      </div>
+
+    </div>
+    `;
   }
 
   document.getElementById('btn-generate').addEventListener('click', function(){
@@ -950,6 +1013,38 @@
   document.getElementById('btn-print-all').addEventListener('click', function(){
     window.print();
   });
+/*
+  
+  import { getFirestore, collection, getDocs } from "firebase/firestore"; 
+
+  const db = getFirestore(app); 
+
+  async function carregarChamadosDoFirebase() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "chamados"));
+      const chamadosFirebase = [];
+
+      querySnapshot.forEach((doc) => {
+        let dados = doc.data();
+        dados.id = doc.id; 
+        
+        if (dados.dataAbertura && dados.dataAbertura.toDate) {
+          dados._timestamp = dados.dataAbertura.toDate();
+        }
+
+        chamadosFirebase.push(dados);
+      });
+
+      state.chamados = chamadosFirebase;
+      renderReview();
+      showScreen('review');
+
+    } catch (error) {
+      console.error("Erro ao buscar chamados: ", error);
+      alert("Erro ao conectar com o Firebase.");
+    }
+  }
+  */
 
 })();
 </script>
