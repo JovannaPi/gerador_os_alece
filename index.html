@@ -637,7 +637,7 @@
     var s=String(v).trim();
     if(s==='') return '—';
     s = s.replace(/^"|"$/g, '').trim();
-    if(/^\*+$/.test(s)) return 'Não informado';
+    if(/^[\*\.\-]+$/.test(s)) return 'Não informado';
     return s;
   }
 
