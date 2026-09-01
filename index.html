@@ -848,7 +848,7 @@
 
   function buildOSPage(c, index, total){
     var chamadoNum = val(c.numeroChamado);
-    var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || norm(c.numeroChamado) === '—';
+    var semOS = norm(c.numeroChamado).indexOf('sem os') !== -1 || chamadoNum === '—';
     var eq = parseEquipe(c.equipe);
     var equipeLabel = eq.num ? ('Equipe '+eq.num+':') : 'Equipe:';
     var equipeNomes = eq.nomes || val(c.equipe);
