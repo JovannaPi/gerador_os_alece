@@ -674,6 +674,7 @@
       }
       map[def.key] = idx;
     });
+    if(map.carimbo === -1) map.carimbo = 0;
     return map;
   }
 
@@ -742,7 +743,7 @@
       try{
         var wb;
         if(isCsv){
-          wb = XLSX.read(e.target.result, { type:'string', cellDates:true });
+          wb = XLSX.read(e.target.result, { type:'string', cellDates:false, raw:true });
         } else {
           wb = XLSX.read(e.target.result, { type:'array', cellDates:true });
         }
